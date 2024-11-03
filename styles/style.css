@@ -56,7 +56,6 @@ nav button:hover {
     cursor: pointer;
 }
 .selected {   
-    color: var(--red);
     text-decoration: underline;
 }
 
