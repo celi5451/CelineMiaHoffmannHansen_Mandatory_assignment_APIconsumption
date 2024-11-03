@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400&display=swap');
+
+:root {
+    --black: black;
+    --white: floralwhite;
+    --yellow: lightgoldenrodyellow;
+    
+    --bordeaux: #321325;
+    --lightBordeaux: #5F0F40;
+    --red: #9A031E;
+
+    --fontMain: Inter, sans-serif;
+    --fontHeader: Merriweather, serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fontMain);
+}
+
+header, footer {
+    font-family: var(--fontHeader);
+}
+header, footer {
+    padding: 0.5rem 1rem;
+    color: var(--white);
+    background-color: var(--bordeaux);    
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    padding: 0.25rem 1rem;
+    background-color: var(--red);
+    font-weight: bold;
+}
+nav li {
+    list-style-type: none;
+    margin-bottom: 0.5rem;
+}
+nav button {
+    text-decoration: none;
+    border: none;
+    color: var(--white);
+    background-color: var(--red);
+    font-size: 1.1rem;
+}
+nav button:hover {
+    text-decoration: underline;
+    color: var(--yellow);
+    cursor: pointer;
+}
+.selected {   
+    color: var(--red);
+    text-decoration: underline;
+}
+
+main {
+    margin: 1rem 1rem 3rem 1rem;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+article.film {
+    border: solid thin var(--lightBordeaux);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+article.film p {
+    padding: 0.5rem;
+}
+article.film img {
+    margin-top: 0.25rem;
+    align-self: center;
+    max-width: 154px;
+    max-height: 231px;
+}
+
+article header {
+    padding: 0.25rem 1rem;
+    color: var(--white);
+    background-color: var(--lightBordeaux);
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.film-content {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.film-info {
+    font-size: 0.9rem;
+    padding-bottom: 0 !important;
+}
+.film-info:last-of-type {
+    padding-bottom: 0.5rem !important;
+}
+.film-info::before {
+    font-weight: bold;
+}
+.date::before {
+    content: 'Release date: ';
+}
+.original-title::before {
+    content: 'Original title: ';
+}
+
+@media (min-width: 480px) {
+    nav ul {
+        display: flex;
+        gap: 2rem;
+    }    
+    nav li {
+        margin-bottom: 0;
+    }
+
+    article.film img {
+        align-self: flex-start;
+        margin-top: 0;
+        border-radius: 0 0 0 0.5rem;
+    }
+    .film-content {
+        flex-flow: row nowrap;
+    }
+}
+
+@media (min-width: 850px) {
+    body, footer {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    main {
+        margin: 1rem 0 3rem 0;
+    }
+}
