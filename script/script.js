@@ -1,41 +1,41 @@
+// Import the API key
 import { apiKey } from './info.js';
 
 const baseUrl = 'https://api.themoviedb.org';
 
-document.querySelectorAll('nav button').forEach((menuOption) => {
-    menuOption.addEventListener('click', function() {
-        queryFilms(this.id);
-
-        const selectedMenuOption = document.querySelector('nav button.selected');
-        if (selectedMenuOption !== null) {
-            selectedMenuOption.classList.remove('selected');
-        }
-        this.classList.add('selected');
-    });
-});
-
+// Function to query films based on button click
 const queryFilms = (query) => {
-    const endpoint = `${baseUrl}/3/movie/${query}`;
+    const endpoint = `${baseUrl}/3/movie/${query}?api_key=${apiKey}`; // Include the API key in the URL
 
     fetch(endpoint, {
         headers: {
             'Authorization': `Bearer ${apiKey}`
         }
     })
-    .then((response) => { 
-        if (response.ok) {
-            return response.text();
-        } else {
-            console.log('Response error', `${response.status} - ${response.statusText}`);
-        }
-    })
-    .then((data) => showFilms(JSON.parse(data)))
-    .catch((error) => console.log('Fetch error', error));
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json(); // Return the parsed JSON
+        })
+        .then((data) => {
+            console.log('Received data:', data); // Log received data for debugging
+            if (data.results) {
+                showFilms(data); // Show films if data contains results
+            } else {
+                console.log('No films found in response'); // Log if no results
+            }
+        })
+        .catch((error) => {
+            console.error('Fetch error:', error); // Log fetch errors
+        });
 };
 
+
+// Function to display films on the webpage
 const showFilms = (films) => {
     const main = document.querySelector('main');
-    main.innerHTML = '';
+    main.innerHTML = ''; // Clear previous content
 
     const filmList = document.createElement('section');
     films.results.forEach((film) => {
@@ -58,3 +58,16 @@ const showFilms = (films) => {
     });
     main.append(filmList);
 };
+
+// Event listeners for navigation buttons
+document.querySelectorAll('nav button').forEach((menuOption) => {
+    menuOption.addEventListener('click', function() {
+        queryFilms(this.id); // Fetch films based on button ID
+
+        const selectedMenuOption = document.querySelector('nav button.selected');
+        if (selectedMenuOption !== null) {
+            selectedMenuOption.classList.remove('selected'); // Remove selected class from previous option
+        }
+        this.classList.add('selected'); // Add selected class to current option
+    });
+});
